@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Orçamento Simples",
+    "slug": "tech-challenge-fase-4",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/config/app-icon.png",
+    "scheme": "techchallengefase3",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.techchallengefase3"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#fff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.techchallengefase3"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/config/app-icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/config/splash-screen.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff",
+          "imageWidth": "100%"
+        }
+      ],
+      "expo-secure-store",
+      "expo-font",
+      "expo-image",
+      "expo-sharing",
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
