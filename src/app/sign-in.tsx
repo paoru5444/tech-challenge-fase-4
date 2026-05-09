@@ -1,5 +1,5 @@
 import React from "react";
-import SignIn from '@/src/screens/auth/screen/sign-in'
+import SignIn from "../modules/auth/presentation/screens/sign-in";
 
 export default function SignInScreen() {
   return <SignIn />;
