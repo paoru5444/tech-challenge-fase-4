@@ -16,11 +16,12 @@ export interface SignInForm {
 
 export function useSignIn() {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector(isSignInProgress)
+  const loading = useAppSelector(isSignInProgress);
 
   async function signIn(credentials: IUserCredentials) {
     try {
       const result = await dispatch(actions.signIn(credentials));
+
       if (actions.signIn.fulfilled.match(result)) {
         router.replace("/(app)/(tabs)");
       }

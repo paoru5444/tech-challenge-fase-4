@@ -28,3 +28,8 @@ export const isSignInProgress = createSelector(
   [selectSignInStatus],
   (signInStatus) => signInStatus === "loading",
 );
+
+export const isSignUpInProgress = createSelector(
+  [selectSignInStatus],
+  (signInStatus) => signInStatus === "loading",
+);

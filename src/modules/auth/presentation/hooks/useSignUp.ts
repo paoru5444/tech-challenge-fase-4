@@ -1,10 +1,12 @@
-import { useState } from "react";
 import { container } from "../../di/container";
 import { IUserCredentials } from "../../domain/entities/user";
 import { router } from "expo-router";
 import { signUpSchema } from "@/src/schemas/auth-schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
+import { isSignUpInProgress } from "../../store/selectors";
+import * as actions from "../../store/actions";
 
 interface SignUpForm {
   email: string;
@@ -13,20 +15,22 @@ interface SignUpForm {
 }
 
 export function useSignUp() {
-  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector(isSignUpInProgress);
 
   function goToSignIn() {
-    router.push("/app/sign-in");
+    router.push("/sign-in");
   }
 
   async function signUp(credentials: IUserCredentials) {
     try {
-      setLoading(true);
-      const user = await container.signUp.execute(credentials);
-      setLoading(false);
+      const result = await dispatch(actions.signUp(credentials));
+
+      if (actions.signIn.fulfilled.match(result)) {
+        router.replace("/(app)/(tabs)");
+      }
     } catch (error) {
       console.log("Sign Up Error:", error);
-      setLoading(false);
     }
   }
 
