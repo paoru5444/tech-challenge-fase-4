@@ -3,6 +3,9 @@ import { Slot } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthProvider } from "../context/auth.context";
+import { Provider } from "react-redux";
+import { persistor, store } from "../store";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -16,12 +19,16 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <SafeAreaView
-        style={{ flex: 1, backgroundColor: "transparent" }}
-        edges={["top"]}
-      >
-        <Slot />
-      </SafeAreaView>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <SafeAreaView
+            style={{ flex: 1, backgroundColor: "transparent" }}
+            edges={["top"]}
+          >
+            <Slot />
+          </SafeAreaView>
+        </PersistGate>
+      </Provider>
     </AuthProvider>
   );
 }
