@@ -5,6 +5,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema } from "@/src/schemas/auth-schema";
+import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
+import * as actions from "../../store/actions";
+import { isSignInProgress } from "../../store/selectors";
 
 export interface SignInForm {
   email: string;
@@ -12,22 +15,22 @@ export interface SignInForm {
 }
 
 export function useSignIn() {
-  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector(isSignInProgress)
 
   async function signIn(credentials: IUserCredentials) {
     try {
-      setLoading(true);
-      const user = await container.signIn.execute(credentials);
-
-      setLoading(false);
+      const result = await dispatch(actions.signIn(credentials));
+      if (actions.signIn.fulfilled.match(result)) {
+        router.replace("/(app)/(tabs)");
+      }
     } catch (error) {
       console.log("Sign In Error:", error);
-      setLoading(false);
     }
   }
 
   function goToSignUp() {
-    router.push("/app/sign-up");
+    router.push("/sign-up");
   }
 
   const {
