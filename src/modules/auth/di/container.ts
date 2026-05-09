@@ -1,5 +1,6 @@
 import { FirebaseAuth } from "../data/remote/firebase-auth";
-import { UserRepositoryImpl } from "../data/repositories/user-repository-impl";
+import { UserRepositoryImpl } from "../domain/repositories/user-repository-impl";
+
 import { Logout } from "../domain/usecases/logout";
 import { SignIn } from "../domain/usecases/sign-in";
 import { SignUp } from "../domain/usecases/sign-up";

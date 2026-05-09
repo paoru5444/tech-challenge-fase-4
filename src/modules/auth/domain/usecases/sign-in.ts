@@ -5,6 +5,6 @@ export class SignIn {
   constructor(private repository: IUserRepository) {}
 
   async execute(credentials: IUserCredentials) {
-    await this.repository.signIn(credentials);
+    return await this.repository.signIn(credentials);
   }
 }
