@@ -17,5 +17,5 @@ export const signUp = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  return await container.logout.execute();
+  await container.logout.execute();
 });

@@ -43,7 +43,6 @@ export function useHomeTransaction() {
   }, [transactions]);
 
   const setSelectedTypes = async (selectedType: TransactionType) => {
-    console.log("selectedType: ", selectedType);
     dispatch(getHomeChartDataSlice.actions.setSelectedType(selectedType));
     await dispatch(actions.getChartData({ selectedType, transactions }));
   };

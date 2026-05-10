@@ -19,7 +19,6 @@ export const getChartData = createAsyncThunk(
     selectedType: Omit<TransactionType, "all">;
     transactions: IHomeTransaction[];
   }) => {
-    console.log("selectedType", selectedType);
     return await container.getChartData.execute(selectedType, transactions);
   },
 );

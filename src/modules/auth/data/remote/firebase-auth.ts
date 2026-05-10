@@ -32,6 +32,6 @@ export class FirebaseAuth {
   }
 
   async logout() {
-    auth.signOut();
+    await auth.signOut();
   }
 }

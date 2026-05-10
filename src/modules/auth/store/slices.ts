@@ -1,6 +1,6 @@
-import { combineSlices, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../domain/entities/user";
-import { signIn, signUp } from "./actions";
+import { logout, signIn, signUp } from "./actions";
 
 export interface AuthState {
   user: IUser | null;
@@ -16,8 +16,8 @@ const initialState: AuthState = {
   error: null,
 };
 
-const signInSlice = createSlice({
-  name: "signIn",
+const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -28,23 +28,13 @@ const signInSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.isAuthenticated = true;
-        console.log("state.isAuthenticated: ", state.isAuthenticated);
         state.user = action.payload;
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = "failed";
         state.isAuthenticated = false;
         state.error = action.error.message || "Falha ao autenticar usuário.";
-      });
-  },
-});
-
-const signUpSlice = createSlice({
-  name: "signUp",
-  initialState,
-  reducers: {},
-  extraReducers(builder) {
-    builder
+      })
       .addCase(signUp.pending, (state) => {
         state.status = "loading";
       })
@@ -53,37 +43,25 @@ const signUpSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload;
       })
-      .addCase(signIn.rejected, (state, action) => {
+      .addCase(signUp.rejected, (state, action) => {
         state.status = "failed";
         state.isAuthenticated = false;
         state.error = action.error.message || "Falha ao criar usuário.";
-      });
-  },
-});
-
-const logoutSlice = createSlice({
-  name: "logout",
-  initialState,
-  reducers: {},
-  extraReducers(builder) {
-    builder
-      .addCase(signUp.pending, (state) => {
+      })
+      .addCase(logout.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(signUp.fulfilled, (state) => {
-        state.status = "succeeded";
+      .addCase(logout.fulfilled, (state) => {
+        state.status = "idle";
         state.user = null;
         state.isAuthenticated = false;
+        state.error = null;
       })
-      .addCase(signIn.rejected, (state, action) => {
+      .addCase(logout.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Falha ao encerrar a sessão.";
       });
   },
 });
 
-export const authenticatorReducer = combineSlices(
-  signInSlice,
-  signUpSlice,
-  logoutSlice,
-);
+export const authenticatorReducer = authSlice.reducer;

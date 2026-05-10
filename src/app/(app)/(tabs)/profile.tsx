@@ -1,4 +1,4 @@
-import Profile from "@/src/screens/profile/screens/profile";
+import Profile from "@/src/modules/profile/presentation/screens/profile";
 import React from "react";
 
 export default function Index() {
