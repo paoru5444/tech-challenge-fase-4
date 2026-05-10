@@ -11,6 +11,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
+import { homeReducer } from "../modules/home/store/slices";
 
 const persistConfig = {
   key: "root",
@@ -19,6 +20,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: authenticatorReducer,
+  home: homeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,10 +1,10 @@
 import { Href, router } from "expo-router";
+import { icons } from "@/src/constants/icons";
+import { TransactionType } from "../models/shared";
 
 export const goTo = (href: Href | string, params: any) => {
   router.push({ pathname: href, params });
 };
-
-// 15 June, 2024
 
 const months = [
   "Janeiro",
@@ -27,4 +27,18 @@ export const dateFormatter = (date: string) => {
   const year = parsedDate.getFullYear();
 
   return `${day} de ${months[month]}, ${year}`;
+};
+
+const pickTransactionTypeIcon = (type: TransactionType) => {
+  if (type === TransactionType.DEPOSIT) {
+    return icons.deposit;
+  } else if (type === TransactionType.WITHDRAW) {
+    return icons.withdraw;
+  }
+
+  return icons.transfer;
+};
+
+export const utils = {
+  pickTransactionTypeIcon,
 };
