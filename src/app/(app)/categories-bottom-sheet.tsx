@@ -1,4 +1,4 @@
-import CategoriesList from "@/src/screens/transactions/components/categories-list";
+import CategoriesList from "@/src/modules/transactions/presentation/components/categories-list";
 import React from "react";
 
 export default function CategoriesBottomSheet() {

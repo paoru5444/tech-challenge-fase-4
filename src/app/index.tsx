@@ -1,7 +1,7 @@
 import { Redirect } from "expo-router";
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import OnboardingScreen from "../screens/onboarding/screens/onboarding";
+import OnboardingScreen from "../modules/onboarding/presentation/screens/onboarding";
 import { useAppSelector } from "../store/hooks";
 import {
   isSignInProgress,
