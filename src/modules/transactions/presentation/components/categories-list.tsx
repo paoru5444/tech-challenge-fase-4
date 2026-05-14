@@ -1,7 +1,7 @@
 import Badge from "@/src/components/ui/bedge";
 import Button from "@/src/components/ui/button";
 import Typography from "@/src/components/ui/typography";
-import useCategories from "@/src/hooks/useCategories";
+import useCategories from "@/src/modules/transactions/presentation/hooks/useCategories";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";

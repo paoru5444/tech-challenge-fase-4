@@ -7,17 +7,14 @@ import { StyleSheet, View } from "react-native";
 
 import { TransactionType } from "@/src/models/shared";
 import { barChartTypes } from "@/src/constants/info";
-import { useTransactionsContext } from "@/src/screens/transactions/context/transactionsContext";
 
 export default function TypesList() {
-  const { handleSelectedType } = useTransactionsContext();
-
   const [selectedType, setSelectedType] = useState<TransactionType>(
     TransactionType.ALL,
   );
 
   const onSelectCategory = () => {
-    handleSelectedType(selectedType);
+    // handleSelectedType(selectedType);
     router.back();
   };
 

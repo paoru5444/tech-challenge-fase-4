@@ -1,4 +1,4 @@
-import useCategories from "@/src/hooks/useCategories";
+import useCategories from "@/src/modules/transactions/presentation/hooks/useCategories";
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import Badge from "../bedge";

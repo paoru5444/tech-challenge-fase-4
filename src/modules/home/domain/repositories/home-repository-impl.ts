@@ -6,7 +6,7 @@ import {
   IHomeTransaction,
 } from "../entries/home";
 import { IHomeRepository } from "./home-repository";
-import { monthNames } from "@/src/screens/transactions/constants";
+import { monthNames } from "@/src/constants/info";
 
 export class HomeRepositoryImpl implements IHomeRepository {
   constructor(private remote: FirebaseFirestore) {}
