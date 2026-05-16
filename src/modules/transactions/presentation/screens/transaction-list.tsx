@@ -1,9 +1,13 @@
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect } from "react";
-import TransactionsListComponent from "../components/transaction-list";
+import React, { lazy, Suspense, useEffect } from "react";
 import useTransactions from "../hooks/useTransactions";
 import { useFilterTransactions } from "../hooks/useFilterTransactions";
 import { usePaginateTransactions } from "../hooks/usePaginateTransactions";
+import { Loading } from "@/src/components/shared/loading";
+
+const TransactionsListComponent = lazy(
+  () => import("../components/transaction-list"),
+);
 
 export default function TransactionsListScreen() {
   const { filterTransactions, loading, goToTransactionsForm } =
@@ -34,17 +38,19 @@ export default function TransactionsListScreen() {
   }, [category, month, year, perScroll]);
 
   return (
-    <TransactionsListComponent
-      search={search}
-      handleSearchChange={handleSearchChange}
-      transactions={filteredTransactions}
-      handleActiveTransactionFilter={handleActiveTransactionFilter}
-      onPressTransaction={goToTransactionsForm}
-      type={selectedTransactionType}
-      onRefresh={onRefresh}
-      refreshing={refreshing}
-      onEndReached={onEndReached}
-      loading={loading}
-    />
+    <Suspense fallback={<Loading />}>
+      <TransactionsListComponent
+        search={search}
+        handleSearchChange={handleSearchChange}
+        transactions={filteredTransactions}
+        handleActiveTransactionFilter={handleActiveTransactionFilter}
+        onPressTransaction={goToTransactionsForm}
+        type={selectedTransactionType}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        onEndReached={onEndReached}
+        loading={loading}
+      />
+    </Suspense>
   );
 }

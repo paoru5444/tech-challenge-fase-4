@@ -22,6 +22,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="home" color={color} size={16} />
           ),
+          lazy: true,
         }}
       />
       <Tabs.Screen
@@ -31,6 +32,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="swap-horizontal-outline" color={color} size={16} />
           ),
+          lazy: true,
         }}
       />
       <Tabs.Screen
@@ -40,6 +42,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="person" color={color} size={16} />
           ),
+          lazy: true,
         }}
       />
     </Tabs>

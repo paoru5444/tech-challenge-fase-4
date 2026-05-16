@@ -1,7 +1,5 @@
 import { router } from "expo-router";
-import { container } from "../../di/container";
 import { IUserCredentials } from "../../domain/entities/user";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema } from "@/src/schemas/auth-schema";

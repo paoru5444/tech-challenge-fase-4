@@ -1,7 +1,8 @@
-import TransactionForm from "../components/transaction-form";
-
-import { FORM_TYPES } from "@/src/constants/info";
+import React, { lazy, Suspense } from "react";
 import { useTransactionForm } from "../hooks/useTransactionForm";
+import { Loading } from "@/src/components/shared/loading";
+
+const TransactionForm = lazy(() => import("../components/transaction-form"));
 
 export default function TransactionFormScreen() {
   const {
@@ -25,23 +26,25 @@ export default function TransactionFormScreen() {
   } = useTransactionForm();
 
   return (
-    <TransactionForm
-      localSearchParams={localSearchParams}
-      onCreate={handleSubmit(onCreate)}
-      onUpdate={handleSubmit(onUpdate)}
-      onDelete={onDelete}
-      formType={formType}
-      openCategoryBottomSheet={openCategoryBottomSheet}
-      openCalendarBottomSheet={openCalendarBottomSheet}
-      isEditing={isEditing}
-      setIsEditing={setIsEditing}
-      setIsReadOnly={setIsReadOnly}
-      control={control}
-      errors={errors}
-      setValue={setValue}
-      isSubmitting={isSubmitting}
-      pageTitle={pageTitle}
-      isReadOnly={isReadOnly}
-    />
+    <Suspense fallback={<Loading />}>
+      <TransactionForm
+        localSearchParams={localSearchParams}
+        onCreate={handleSubmit(onCreate)}
+        onUpdate={handleSubmit(onUpdate)}
+        onDelete={onDelete}
+        formType={formType}
+        openCategoryBottomSheet={openCategoryBottomSheet}
+        openCalendarBottomSheet={openCalendarBottomSheet}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        setIsReadOnly={setIsReadOnly}
+        control={control}
+        errors={errors}
+        setValue={setValue}
+        isSubmitting={isSubmitting}
+        pageTitle={pageTitle}
+        isReadOnly={isReadOnly}
+      />
+    </Suspense>
   );
 }
