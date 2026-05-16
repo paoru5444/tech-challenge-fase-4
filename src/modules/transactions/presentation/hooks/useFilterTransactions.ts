@@ -1,15 +1,12 @@
-import { CategoryType, TransactionType } from "@/src/models/shared";
-import { useAppDispatch, useAppSelector } from "@/src/store/hooks";
+import { TransactionType } from "@/src/models/shared";
+import { useAppSelector } from "@/src/store/hooks";
 import { useCallback, useMemo, useState } from "react";
 import {
   selectTransactionFormDataCategory,
   selectTransactions,
 } from "../../store/selectors";
-import { transactionsSlice } from "../../store/slices";
 
 export function useFilterTransactions() {
-  const dispatch = useAppDispatch();
-
   const transactions = useAppSelector(selectTransactions);
 
   const [selectedTransactionType, setSelectedTransactionType] = useState(

@@ -2,13 +2,13 @@ import Badge from "@/src/components/ui/bedge";
 import Button from "@/src/components/ui/button";
 import Typography from "@/src/components/ui/typography";
 import useCategories from "@/src/modules/transactions/presentation/hooks/useCategories";
-import useTransactions from "@/src/hooks/useTransactions";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { monthNamesInPortuguese } from "@/src/constants/info";
 import { CategoryType } from "@/src/models/shared";
+import useTransactions from "../hooks/useTransactions";
 
 export default function TransactionFilter() {
   const [selectedYear, setSelectedYear] = useState("");
@@ -19,8 +19,7 @@ export default function TransactionFilter() {
   });
 
   const { getCategories, categories, loading } = useCategories();
-  const { getTransactionsYearsAndMonths, transactionMonths, transactionYears } =
-    useTransactions();
+  const { getTransactionsYearsAndMonths, months, years } = useTransactions();
 
   useEffect(() => {
     getCategories();
@@ -73,7 +72,7 @@ export default function TransactionFilter() {
             justifyContent: "flex-start",
           }}
         >
-          {transactionYears.map((value) => (
+          {years.map((value) => (
             <Badge
               key={value}
               label={value}
@@ -93,7 +92,7 @@ export default function TransactionFilter() {
             justifyContent: "flex-start",
           }}
         >
-          {transactionMonths.map((value) => (
+          {months.map((value) => (
             <Badge
               key={value}
               label={monthNamesInPortuguese[parseInt(value - 1)]}

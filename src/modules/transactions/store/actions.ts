@@ -77,7 +77,7 @@ export const filterTransactions = createAsyncThunk(
 
 export const getTransactionsYearsAndMonths = createAsyncThunk(
   "transactions/getTransactionsYearsAndMonths",
-  async (transactions: ITransaction[]) => {
-    return await container.getTransactionsYearsAndMonths.execute(transactions);
+  (transactions: ITransaction[]) => {
+    return container.getTransactionsYearsAndMonths.execute(transactions);
   },
 );

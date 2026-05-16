@@ -26,17 +26,6 @@ interface TransactionsState {
     value: string;
   };
   transactionFormDataDate: string;
-  transactionFormData:
-    | {
-        amount: string;
-        description: string;
-        date: string;
-        category: {
-          key: string;
-          value: string;
-        };
-      }
-    | {};
 }
 
 const initialState: TransactionsState = {
