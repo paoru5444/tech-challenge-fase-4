@@ -76,12 +76,6 @@ Você pode começar a desenvolver editando os arquivos dentro do diretório **ap
 
 ---
 
-### Sobre o upload de arquivos no dispositivo android:
-
-- A configuração do firebase usando o web ensinado em aula causa problemas quando o update acontece no android, aparentemente, o android bloqueia o fetch sob arquivos do dispositivo por questões de segurança, impossibilitando a geração de um blob para passar ao firebase no upload. Para a continuidade do projeto, vou migrar para o react-native-firebase, que lida melhor com esas questões de arquivos locais.
-
----
-
 ## Ferramentas
 
 - React Native
@@ -95,35 +89,35 @@ Você pode começar a desenvolver editando os arquivos dentro do diretório **ap
 - Expo Font
 - React Native Calendars
 - React Native Document Picker
+- RxJS
 
 ---
 
 ## Arquitetura
 
-O projeto foi construído com uma arquitetura **modular**, onde cada pasta dentro de `screens/` representa um módulo independente da aplicação.
+O projeto foi construído com uma arquitetura **modular**, onde cada pasta dentro de `modules/` representa um módulo independente da aplicação, que contém uma estrutura de Clean Architecture.
 
-### Padrão de cada módulo
-
-Cada módulo segue o mesmo padrão de escrita, separando responsabilidades entre dois tipos de componentes:
-
-- **Stateful Components** (`screens/`) — gerenciam a lógica de negócio e o estado
-- **Stateless Components** (`components/`) — apenas renderizam os dados recebidos via props
-
-Essa separação torna os componentes **fáceis de testar** de forma isolada, uma vez que os Stateless Components recebem seus dados por injeção de dependência.
-
-### Estrutura de pastas
+### Estrutura dos módulos
 ```
 src/
-└── screens/
+└── modules/
     └── <ModuleName>/
-        ├── components/    # Stateless components (apenas renderização)
-        ├── screens/       # Stateful components (lógica e estado)
-        ├── context/       # Context API do módulo
-        ├── models/        # Tipagens e interfaces
-        ├── navigation/    # Configuração de navegação
-        ├── constants/     # Constantes do módulo
-        ├── utils/         # Funções utilitárias
-        └── store/         # (em breve) Gerenciamento de estado global
+        ├── data
+        ├────── remote/
+        ├── domain
+        ├────── entities/
+        ├────── repositories/
+        ├────── usecases/
+        ├── presentation
+        ├────── components/
+        ├────── hooks/
+        ├────── screens/
+        ├── di
+        ├────── container.ts
+        ├── store
+        ├────── actions.ts
+        ├────── selectors.ts
+        ├────── slices.ts
 ```
 
 ### Escalabilidade
@@ -134,19 +128,15 @@ Essa estrutura torna o projeto preparado para crescer, seja para a adição de *
 
 ## Melhorias
 
-- Aprimorar a tipagem dos módulos em toda a aplicação
-- Separar os hooks em 2 domínios (Lógica e Serviço)
-- Criar dominio de serviço genérico para o firebase
+- Expandir uso do RxJS pelo projeto
 - Salvar os assets no S3 da AWS
 - Adicionar mais animações e selecionar icones melhores
-- Adicionar ferramenta de gerenciamento de estado global mais robusta (Redux)
 - Criar testes unitários visando 80% de coverage
 - Criar em torno de 5 testes de integração para cenários criticos
 - Adicionar ferramenta de Tracking e Monitoramento como o Sentry
 - Subir a aplicação no Google Play e na App Store
 - Adicionar EAS para OTA Updates
 - Usar react-native-firebase
-- Adicionar .env para proteger as secrets da aplicação
 
 ---
 
