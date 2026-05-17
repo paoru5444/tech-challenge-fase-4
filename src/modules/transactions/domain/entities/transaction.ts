@@ -8,8 +8,3 @@ export interface ITransaction {
   id: string;
   type: TransactionType;
 }
-
-
-export interface ICatrgory {
-  
-}

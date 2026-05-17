@@ -1,13 +1,7 @@
-import { TransactionType } from "@/src/models/shared";
+import { Transaction, TransactionType } from "@/src/models/shared";
 import { useAppSelector } from "@/src/store/hooks";
-import {
-  useCallback,
-  useDeferredValue,
-  useMemo,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { useCallback, useMemo, useState, useTransition } from "react";
+import { useReactiveSearch } from "@/src/hooks/useReactiveSearch";
 import {
   selectTransactionFormDataCategory,
   selectTransactions,
@@ -20,23 +14,36 @@ export function useFilterTransactions() {
     TransactionType.ALL,
   );
   const [inputValue, setInputValue] = useState("");
-  const [search, setSearch] = useState("");
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [, startTransition] = useTransition();
 
-  const deferredSearch = useDeferredValue(search);
+  const fetcher = useCallback(
+    (query: string): Promise<Transaction[]> => {
+      const normalized = query.toLowerCase();
+      return Promise.resolve(
+        transactions.filter((t) =>
+          t.description.toLowerCase().includes(normalized),
+        ),
+      );
+    },
+    [transactions],
+  );
 
-  const [_, startTransition] = useTransition();
+  const { data: searchResults, search } = useReactiveSearch<Transaction>(
+    fetcher,
+    350,
+    0,
+  );
 
-  const handleSearchChange = useCallback((value: string) => {
-    setInputValue(value);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => setSearch(value), 500);
-  }, []);
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setInputValue(value);
+      search(value);
+    },
+    [search],
+  );
 
   const handleActiveTransactionFilter = (value: TransactionType) => {
-    startTransition(() => {
-      setSelectedTransactionType(value);
-    });
+    startTransition(() => setSelectedTransactionType(value));
   };
 
   const transactionFormDataCategory = useAppSelector(
@@ -44,20 +51,13 @@ export function useFilterTransactions() {
   );
 
   const filteredTransactions = useMemo(() => {
-    const normalizedSearch = deferredSearch.toLowerCase();
-    return transactions.filter((transaction) => {
-      const matchSearch = transaction.description
-        .toLowerCase()
-        .includes(normalizedSearch);
-
-      const matchType =
-        selectedTransactionType === TransactionType.ALL
-          ? true
-          : transaction.type === selectedTransactionType;
-
-      return matchSearch && matchType;
-    });
-  }, [transactions, deferredSearch, selectedTransactionType]);
+    const base = !inputValue.trim() ? transactions : searchResults;
+    return base.filter((t) =>
+      selectedTransactionType === TransactionType.ALL
+        ? true
+        : t.type === selectedTransactionType,
+    );
+  }, [inputValue, transactions, searchResults, selectedTransactionType]);
 
   return {
     selectedTransactionType,
